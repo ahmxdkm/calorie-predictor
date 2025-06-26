@@ -1,43 +1,33 @@
-import numpy as np
-import joblib
 import streamlit as st
 import pandas as pd
+import joblib
 
-# 🔍 DEBUG LINE
+st.title("Calorie Burn Predictor")
+
+# Debugging
 st.write("Loading model...")
 
 try:
     model = joblib.load("Project.sav")
-    st.write("✅ Model loaded successfully")
+    st.success("✅ Model loaded successfully")
 except Exception as e:
     st.error(f"❌ Error loading model: {e}")
 
+# 🎯 User input
+st.subheader("Enter your details:")
 
-model = joblib.load("Project.sav")
+sex = st.selectbox("Sex", ["M", "F"])
+age = st.number_input("Age", min_value=1, max_value=120)
+height = st.number_input("Height (in cm)", min_value=50.0, max_value=250.0)
+weight = st.number_input("Weight (in kg)", min_value=10.0, max_value=300.0)
+duration = st.number_input("Duration (in mins)", min_value=1.0, max_value=300.0)
+heart_rate = st.number_input("Heart Rate", min_value=30, max_value=220)
+body_temp = st.number_input("Body Temperature (in °C)", min_value=30.0, max_value=45.0)
 
-
-print("Enter the following details:")
-
-user_data = {
-    "Sex": input("Sex (M/F): ").lower(),
-    "Age": int(input("Age: ")),
-    "Height": float(input("Height (in cm): ")),
-    "Weight": float(input("Weight (in kg): ")),
-    "Duration": float(input("Duration (in mins): ")),
-    "Heart_Rate": int(input("Heart Rate: ")),
-    "Body_Temp": float(input("Body Temperature (in °C): "))
-}
-
-
-if user_data["Sex"] == 'm':
-    user_data["Sex"] = 1  
-elif user_data["Sex"] == 'f':
-    user_data["Sex"] = 0  
-else:
-    raise ValueError("Invalid input for Sex. Please enter 'm' or 'f'.")
-
-df = pd.DataFrame([user_data])
-
-calories = model.predict(df)
-
-print(f"\nPredicted Calories Burned: {calories[0]:.2f}")
+if st.button("Predict"):
+    sex_encoded = 1 if sex == "M" else 0
+    data = pd.DataFrame([[sex_encoded, age, height, weight, duration, heart_rate, body_temp]],
+                        columns=["Sex", "Age", "Height", "Weight", "Duration", "Heart_Rate", "Body_Temp"])
+    
+    prediction = model.predict(data)[0]
+    st.success(f"🔥 Predicted Calories Burned: {round(prediction, 2)}")
