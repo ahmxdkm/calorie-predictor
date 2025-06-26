@@ -1,6 +1,16 @@
-import pandas as pd
 import numpy as np
 import joblib
+import streamlit as st
+import pandas as pd
+
+# 🔍 DEBUG LINE
+st.write("Loading model...")
+
+try:
+    model = joblib.load("Project.sav")
+    st.write("✅ Model loaded successfully")
+except Exception as e:
+    st.error(f"❌ Error loading model: {e}")
 
 
 model = joblib.load("Project.sav")
