@@ -1,5 +1,7 @@
+streamlit
 flask
 pandas
 joblib
 scikit-learn
 catboost
+numpy
