@@ -5,7 +5,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load("calorie.sav")
+model = joblib.load("project.sav")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
