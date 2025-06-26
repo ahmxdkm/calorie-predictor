@@ -7,7 +7,9 @@ st.title("🔥 Calorie Burn Predictor")
 # Load model
 try:
     model = joblib.load("Project.sav")
+    st.success("✅ Model loaded successfully")
 except Exception as e:
+    st.error(f"❌ Error loading model: {e}")
 
 st.subheader("Enter your details:")
 
