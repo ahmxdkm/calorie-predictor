@@ -3,7 +3,7 @@ import numpy as np
 import joblib
 
 
-model = joblib.load(r"C:\Users\wwwah\iHub\Project.sav")
+model = joblib.load("Project.sav")
 
 
 print("Enter the following details:")
