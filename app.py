@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load("Project.sav")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "Project.sav")
+model = joblib.load(MODEL_PATH)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
