@@ -1,14 +1,19 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
 st.title("🔥 Calorie Burn Predictor")
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "Project.sav")
+
 # Load model silently
 try:
-    model = joblib.load("Project.sav")
+    model = joblib.load(MODEL_PATH)
 except Exception as e:
     st.error(f"❌ Error loading model: {e}")
+
 
 st.subheader("Enter your details:")
 
